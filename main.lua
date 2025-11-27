@@ -5,22 +5,30 @@ function love.load()
     require "modules/cursor"
 
     -- setting window size
-    local windowWidth, windowHeight = love.window.getDesktopDimensions()
+    windowWidth, windowHeight = love.window.getDesktopDimensions()
     love.window.setMode(windowWidth, windowHeight)
 
     -- setting up grid
     gridInitialize()
+    particlesInitialzie()
     cursorInitialize()
     grid:clear()
 end
 
 function love.update(dt)
     grid:update(dt)
+
+    -- cursor update
+    cursor:move()
+    cursor:drop()
 end
 
 function love.draw()
     grid:draw()
     cursor:draw()
+
+    -- instructions
+    love.graphics.printf("arrows to move cursor\nspace to drop material\n1, 2 to select materials\nx to clear\nescape to exit", 0, 0, windowWidth, "center")
 end
 
 function love.keypressed(key)
@@ -28,27 +36,9 @@ function love.keypressed(key)
         love.event.quit()
     end
 
-    if key == "space" then
-        grid.table[cursor.i][cursor.j] = 1
-    end
-
     if key == "x" then
         grid:clear()
     end
 
-    if key == "up" then
-        cursor.j = cursor.j - 1
-    end
-
-    if key == "down" then
-        cursor.j = cursor.j + 1
-    end
-
-    if key == "left" then
-        cursor.i = cursor.i - 1
-    end
-
-    if key == "right" then
-        cursor.i = cursor.i + 1
-    end
+    cursor:selectMaterial(key)
 end

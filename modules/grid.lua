@@ -6,10 +6,10 @@ function gridInitialize()
     grid.columns = 30
 
     grid.table = {}
-    grid.tableOriginX = 500
+    grid.tableOriginX = 520
     grid.tableOriginY = 200
     grid.timer = 0
-    grid.timerEnd = 0.5
+    grid.timerEnd = 0
 
     function grid:clear()
         for i = 1, self.rows do 
@@ -25,9 +25,10 @@ function gridInitialize()
         if self.timer > self.timerEnd then
             for i = 1, self.rows do
                 for j = 1, self.columns do
-                    if self.table[i][j] == 1 and self.table[i][j+1] == 0 then
-                        self.table[i][j] = 0
-                        self.table[i][j+1] = 1
+                    if self.table[i][j] == sand.value then
+                        sand:update(i, j)
+                    elseif self.table[i][j] == water.value then
+                        water:update(i, j)
                     end
                 end
             end
@@ -39,10 +40,12 @@ function gridInitialize()
         for i = 1, self.rows do
             for j = 1, self.columns do
                 if self.table[i][j] == 0 then
-                    love.graphics.rectangle("line", self.tableOriginX+(i*10), self.tableOriginY+(j*10), self.cellSize, self.cellSize)
-                else
-                    --love.graphics.setColor(0, 0, 0)
-                    love.graphics.rectangle("fill", self.tableOriginX+(i*10), self.tableOriginY+(j*10), self.cellSize, self.cellSize)
+                    love.graphics.setColor(1, 1 ,1, .1)
+                    love.graphics.rectangle("line", self.tableOriginX+(i*self.cellSize), self.tableOriginY+(j*self.cellSize), self.cellSize, self.cellSize)
+                elseif self.table[i][j] == 1 then
+                    sand:draw(i, j, self.tableOriginX, self.tableOriginY, self.cellSize)
+                elseif self.table[i][j] == 2 then
+                    water:draw(i, j, self.tableOriginX, self.tableOriginY, self.cellSize)
                 end
             end
         end
