@@ -31,23 +31,23 @@ function cursorInitialize()
         end
     end
 
-    function cursor:drop()                          -- drops a pixel of selected material
+    function cursor:drop()                              -- drops a pixel of selected material
         if love.keyboard.isDown("space") then
             grid.table[self.i][self.j] = cursor.material
         end
     end
 
-    function cursor:selectMaterial(key)                -- select material you want to drop
+    function cursor:selectMaterial(key)                 -- select material you want to drop
         if key == "1" then
-            self.material = 1
+            self.material = sand.value
         end
 
         if key == "2" then
-            self.material = 2
+            self.material = water.value
         end
     end
 
-    function cursor:draw()
+    function cursor:draw()                              -- drawing cursor
         love.graphics.setColor(0, 1, 0, 1)
         love.graphics.rectangle("line", grid.tableOriginX+(self.i*10), grid.tableOriginY+(self.j*10), grid.cellSize, grid.cellSize)
     end
