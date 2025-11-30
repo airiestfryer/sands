@@ -45,10 +45,18 @@ function cursorInitialize()
         if key == "2" then
             self.material = water.value
         end
+
+        if key == "3" then
+            self.material = cloud.value
+        end
+
+        if key == "4" then
+            self.material = steel.value
+        end
     end
 
     function cursor:draw()                              -- drawing cursor
         love.graphics.setColor(0, 1, 0, 1)
-        love.graphics.rectangle("line", grid.tableOriginX+(self.i*10), grid.tableOriginY+(self.j*10), grid.cellSize, grid.cellSize)
+        love.graphics.rectangle("line", grid.tableOriginX+(self.i*grid.cellSize), grid.tableOriginY+(self.j*grid.cellSize), grid.cellSize, grid.cellSize)
     end
 end

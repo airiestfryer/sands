@@ -10,9 +10,14 @@ function love.load()
 
     -- setting up grid
     gridInitialize()
-    particlesInitialzie()
-    cursorInitialize()
     grid:clear()
+
+    -- initializing all particles
+    dynamicParticlesInitialzie()
+    staticParticlesInitialize()
+
+    -- initializing cursor
+    cursorInitialize()
 end
 
 function love.update(dt)
@@ -25,6 +30,7 @@ end
 
 function love.draw()
     grid:draw()
+    grid:drawBorder()
     cursor:draw()
 
     -- instructions
