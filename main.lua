@@ -22,6 +22,7 @@ end
 
 function love.update(dt)
     grid:update(dt)
+    grid:updateDensityTable()
 
     -- cursor update
     cursor:move()
@@ -31,10 +32,12 @@ end
 function love.draw()
     grid:draw()
     grid:drawBorder()
+    --grid:drawDensities()
+    
     cursor:draw()
 
     -- instructions
-    love.graphics.printf("arrows to move cursor\nspace to drop material\n1, 2 to select materials\nx to clear\nescape to exit", 0, 0, windowWidth, "center")
+    love.graphics.printf("arrows to move cursor\nspace to drop material\n1, 2, 3, 4, 5 to select materials\nx to clear\nescape to exit", 0, 0, windowWidth, "center")
 end
 
 function love.keypressed(key)
