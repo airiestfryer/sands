@@ -18,6 +18,9 @@ function love.load()
 
     -- initializing cursor
     cursorInitialize()
+
+    -- font
+    defaultFont = love.graphics.newFont(12)
 end
 
 function love.update(dt)
@@ -35,9 +38,11 @@ function love.draw()
     --grid:drawDensities()
     
     cursor:draw()
+    cursor:displaySelectedMaterial()
 
     -- instructions
-    love.graphics.printf("arrows to move cursor\nspace to drop material\n1, 2, 3, 4, 5 to select materials\nx to clear\nescape to exit", 0, 0, windowWidth, "center")
+    love.graphics.setFont(defaultFont)
+    love.graphics.printf("z to change cursor movement method (mouse and arrows)\nmouse 1 or space to drop material\n1, 2, 3, 4, 5 to select materials\nx to clear\nescape to exit", 0, 0, windowWidth, "center")
 end
 
 function love.keypressed(key)
@@ -47,6 +52,10 @@ function love.keypressed(key)
 
     if key == "x" then
         grid:clear()
+    end
+
+    if key == "z" then
+        cursor.mouseMovement = not cursor.mouseMovement
     end
 
     cursor:selectMaterial(key)

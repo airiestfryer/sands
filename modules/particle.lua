@@ -42,7 +42,7 @@ function dynamicParticlesInitialzie()
     function solid:moveDownDiagonal(row, col, value)
         local r = math.random(1,2)                                  -- 1 is left, 2 is right
         if r == 1 then
-            if row > 1 and grid.densityTable[row-1][col+1] < self.density then
+            if row > 1 and grid.densityTable[row-1][col+1] < self.density and grid.densityTable[row-1][col] < self.density then
                 grid.table[row][col] = grid.table[row-1][col+1]
                 grid.table[row-1][col+1] = value
 
@@ -50,7 +50,7 @@ function dynamicParticlesInitialzie()
                 grid.dataTable[row-1][col+1] = 1
             end
         else
-            if row < grid.rows and grid.densityTable[row+1][col+1] < self.density then
+            if row < grid.rows and grid.densityTable[row+1][col+1] < self.density and grid.densityTable[row+1][col] < self.density then
                 grid.table[row][col] = grid.table[row+1][col+1]
                 grid.table[row+1][col+1] = value
 
@@ -63,6 +63,7 @@ function dynamicParticlesInitialzie()
     sand = {}
     sand.__index = sand
     setmetatable(sand, solid)
+    sand.name = "Sand"
     sand.value = 1
     sand.density = 25
     sand.color = {1, 0.7, 0}
@@ -91,6 +92,7 @@ function dynamicParticlesInitialzie()
     water = {}
     water.__index = water
     setmetatable(water, liquid)
+    water.name = "Water"
     water.value = 11
     water.density = 15
     water.color = {0, 0, 1, 0.2}
@@ -113,6 +115,7 @@ function dynamicParticlesInitialzie()
     oil = {}
     oil.__index = oil
     setmetatable(oil, liquid)
+    oil.name = "Oil"
     oil.value = 12
     oil.density = 13
     oil.color = {0.7, 0.7, 0, 0.2}
@@ -171,6 +174,7 @@ function dynamicParticlesInitialzie()
     cloud = {}
     cloud.__index = cloud
     setmetatable(cloud, gas)
+    cloud.name = "Cloud"
     cloud.value = 21
     cloud.density = 5
     cloud.color = {0.7, 0.7, 1, 0.2}
@@ -204,6 +208,7 @@ function staticParticlesInitialize()
     steel = {}
     steel.__index = steel
     setmetatable(steel, staticParticle)
+    steel.name = "Steel"
     steel.value = 31
     steel.density = 40
     steel.color = {0.3, 0.3, 0.3, 1}
