@@ -7,7 +7,7 @@ function cursorInitialize()
     cursor.name = sand.name
     cursor.density = 30
     cursor.mouseMovement = true
-    cursor.color = {0, 1, 0, 0.5}
+    cursor.color = {1, 1, 1, 1}
 
     local originX, originY = grid.tableOriginX, grid.tableOriginY
     local width, height = grid.borderWidth, grid.borderHeight
@@ -80,35 +80,33 @@ function cursorInitialize()
     function cursor:selectMaterial(key)                 -- select material you want to drop
         if key == "1" then
             self.material = sand.value
-            self.density = sand.density
+            --self.density = sand.density
             self.name = sand.name
-        end
-
-        if key == "2" then
+        elseif key == "2" then
+            self.material = soil.value
+            self.density = soil.density
+            self.name = soil.name
+        elseif key == "3" then
             self.material = water.value
-            self.density = water.density
+            --self.density = water.density
             self.name = water.name
-        end
-
-        if key == "3" then
+        elseif key == "4" then
             self.material = oil.value
             self.density = oil.density
             self.name = oil.name
-        end
-
-        if key == "4" then
+        elseif key == "5" then
             self.material = cloud.value
-            self.density = cloud.density
+            --self.density = cloud.density
             self.name = cloud.name
-        end
-
-        if key == "5" then
+        elseif key == "6" then
+            self.material = smoke.value
+            self.density = smoke.density
+            self.name = smoke.name
+        elseif key == "7" then
             self.material = steel.value
             self.density = steel.density
             self.name = steel.name
-        end
-
-        if key == "q" then
+        elseif key == "q" then
             self.material = 0
             self.density = 0
             self.name = "Eraser"

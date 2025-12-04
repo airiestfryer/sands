@@ -48,10 +48,14 @@ function gridInitialize()
                         if self.dataTable[i][j] == 0 then
                             if self.table[i][j] == sand.value then
                                 sand:update(i, j)
+                            elseif self.table[i][j] == soil.value then
+                                soil:update(i, j)
                             elseif self.table[i][j] == water.value then
                                 water:update(i, j)
                             elseif self.table[i][j] == cloud.value then
                                 cloud:update(i, j)
+                            elseif self.table[i][j] == smoke.value then
+                                smoke:update(i, j)
                             elseif self.table[i][j] == oil.value then
                                 oil:update(i, j)
                             end
@@ -72,10 +76,14 @@ function gridInitialize()
                     --love.graphics.rectangle("line", self.tableOriginX+(i*self.cellSize), self.tableOriginY+(j*self.cellSize), self.cellSize, self.cellSize)
                 elseif self.table[i][j] == sand.value then
                     sand:draw(i, j, self.tableOriginX, self.tableOriginY, self.cellSize)
+                elseif self.table[i][j] == soil.value then
+                    soil:draw(i, j, self.tableOriginX, self.tableOriginY, self.cellSize)
                 elseif self.table[i][j] == water.value then
                     water:draw(i, j, self.tableOriginX, self.tableOriginY, self.cellSize)
                 elseif self.table[i][j] == cloud.value then
                     cloud:draw(i, j, self.tableOriginX, self.tableOriginY, self.cellSize)
+                elseif self.table[i][j] == smoke.value then
+                    smoke:draw(i, j, self.tableOriginX, self.tableOriginY, self.cellSize)
                 elseif self.table[i][j] == steel.value then
                     steel:draw(i, j, self.tableOriginX, self.tableOriginY, self.cellSize)
                 elseif self.table[i][j] == oil.value then
@@ -97,14 +105,18 @@ function gridInitialize()
                     self.densityTable[i][j] = 0
                 elseif self.table[i][j] == sand.value then
                     self.densityTable[i][j] = sand.density
+                elseif self.table[i][j] == soil.value then
+                    self.densityTable[i][j] = soil.density
                 elseif self.table[i][j] == water.value then
                     self.densityTable[i][j] = water.density
-                elseif self.table[i][j] == cloud.value then
-                    self.densityTable[i][j] = cloud.density
-                elseif self.table[i][j] == steel.value then
-                    self.densityTable[i][j] = steel.density
                 elseif self.table[i][j] == oil.value then
                     self.densityTable[i][j] = oil.density
+                elseif self.table[i][j] == cloud.value then
+                    self.densityTable[i][j] = cloud.density
+                elseif self.table[i][j] == smoke.value then
+                    self.densityTable[i][j] = smoke.density
+                elseif self.table[i][j] == steel.value then
+                    self.densityTable[i][j] = steel.density
                 end
             end
         end

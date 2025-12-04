@@ -8,6 +8,9 @@ function love.load()
     windowWidth, windowHeight = love.window.getDesktopDimensions()
     love.window.setMode(windowWidth, windowHeight)
 
+    -- gamestate
+    gamePaused = false
+
     -- setting up grid
     gridInitialize()
     grid:clear()
@@ -21,15 +24,23 @@ function love.load()
 
     -- font
     defaultFont = love.graphics.newFont(12)
+
+    -- setting background color
+    love.graphics.setBackgroundColor(0, 0.3, 0.1)
 end
 
 function love.update(dt)
-    grid:update(dt)
-    grid:updateDensityTable()
-
-    -- cursor update
+    -- cursor updates
     cursor:move()
     cursor:drop()
+
+    -- game grid updates
+    if gamePaused == false then
+        grid:update(dt)
+        grid:updateDensityTable()
+    else
+        --nothing happens
+    end
 end
 
 function love.draw()
@@ -39,6 +50,10 @@ function love.draw()
     
     cursor:draw()
     cursor:displaySelectedMaterial()
+
+    if gamePaused then
+        love.graphics.printf("Paused >", windowWidth-(windowWidth/12), 10, 100, "right")
+    end
 
     -- instructions
     love.graphics.setFont(defaultFont)
@@ -56,6 +71,10 @@ function love.keypressed(key)
 
     if key == "z" then
         cursor.mouseMovement = not cursor.mouseMovement
+    end
+
+    if key == "tab" then
+        gamePaused = not gamePaused
     end
 
     cursor:selectMaterial(key)

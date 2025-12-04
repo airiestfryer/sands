@@ -66,7 +66,7 @@ function dynamicParticlesInitialzie()
     sand.name = "Sand"
     sand.value = 1
     sand.density = 25
-    sand.color = {1, 0.7, 0}
+    sand.color = {1, 0.7, 0, 1}
 
     function sand:update(row, col)
         if grid.densityTable[row][col+1] == nil then
@@ -79,6 +79,29 @@ function dynamicParticlesInitialzie()
     end
 
     function sand:draw(i, j, originX, originY, cellSize)
+        love.graphics.setColor(unpack(self.color))
+        love.graphics.rectangle("fill", originX+(i*cellSize), originY+(j*cellSize), cellSize, cellSize)
+    end
+
+    soil = {}
+    soil.__index = soil
+    setmetatable(soil, solid)
+    soil.name = "Soil"
+    soil.value = 2
+    soil.density = 25
+    soil.color = {0.2, 0.2, 0, 1}
+
+    function soil:update(row, col)
+        if grid.densityTable[row][col+1] == nil then
+            -- nothing happens
+        elseif grid.densityTable[row][col+1] < self.density then
+            self:moveDown(row, col, self.value)
+        elseif grid.densityTable[row][col+1] >= self.density then
+            self:moveDownDiagonal(row, col, self.value)
+        end
+    end
+
+    function soil:draw(i, j, originX, originY, cellSize)
         love.graphics.setColor(unpack(self.color))
         love.graphics.rectangle("fill", originX+(i*cellSize), originY+(j*cellSize), cellSize, cellSize)
     end
@@ -152,7 +175,7 @@ function dynamicParticlesInitialzie()
     end
 
     function gas:moveUpLeft(row, col, value)
-        if row > 1 and col > 1 and grid.densityTable[row-1][col-1] < self.density then
+        if row > 1 and col > 1 and grid.densityTable[row-1][col-1] < self.density and grid.densityTable[row-1][col] < self.density then
             grid.table[row][col] = grid.table[row-1][col-1]
             grid.table[row-1][col-1] = value
 
@@ -162,7 +185,7 @@ function dynamicParticlesInitialzie()
     end
 
     function gas:moveUpRight(row, col, value)
-        if row < grid.rows and col > 1 and grid.densityTable[row+1][col-1] < self.density then
+        if row < grid.rows and col > 1 and grid.densityTable[row+1][col-1] < self.density and grid.densityTable[row+1][col] < self.density then
             grid.table[row][col] = grid.table[row+1][col-1]
             grid.table[row+1][col-1] = value
 
@@ -195,6 +218,34 @@ function dynamicParticlesInitialzie()
     end
 
     function cloud:draw(i, j, originX, originY, cellSize)
+        love.graphics.setColor(unpack(self.color))
+        love.graphics.rectangle("fill", originX+(i*cellSize), originY+(j*cellSize), cellSize, cellSize)
+    end
+
+    smoke = {}
+    smoke.__index = smoke
+    setmetatable(smoke, gas)
+    smoke.name = "Smoke"
+    smoke.value = 22
+    smoke.density = 6
+    smoke.color = {0, 0, 0, 0.5}
+
+    function smoke:update(row, col)
+        local r = math.random(1, 6)                                 -- 1 is up, 2 is top-left, 3 is top-right, 4 is sides, 5 and above is no movement
+        if r == 1 then
+            self:moveUp(row, col, self.value)
+        elseif r == 2 then  
+            self:moveUpLeft(row, col, self.value)
+        elseif r == 3 then
+            self:moveUpRight(row, col, self.value)
+        elseif r == 4 then
+            self:moveSide(row, col, self.value)
+        else
+            --nothing ever happens
+        end
+    end
+
+    function smoke:draw(i, j, originX, originY, cellSize)
         love.graphics.setColor(unpack(self.color))
         love.graphics.rectangle("fill", originX+(i*cellSize), originY+(j*cellSize), cellSize, cellSize)
     end
