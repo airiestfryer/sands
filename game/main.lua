@@ -1,8 +1,8 @@
 function love.load()
     -- modules
-    require "modules/grid"
-    require "modules/particle"
-    require "modules/cursor"
+    require "src/grid"
+    require "src/particle"
+    require "src/cursor"
 
     -- setting window size
     windowWidth, windowHeight = love.window.getDesktopDimensions()

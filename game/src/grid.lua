@@ -1,9 +1,9 @@
 function gridInitialize()
     grid = {}
     grid.__index = grid
-    grid.cellSize = 10
-    grid.rows = 135
-    grid.columns = 70
+    grid.cellSize = 5
+    grid.rows = 260
+    grid.columns = 120
 
     grid.borderWidth = grid.cellSize * grid.rows
     grid.borderHeight = grid.cellSize * grid.columns
